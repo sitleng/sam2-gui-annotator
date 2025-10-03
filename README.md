@@ -22,12 +22,6 @@ A powerful GUI application for interactive image segmentation and annotation usi
 - **Export functionality**: Save annotations and segmentation masks
 - **Multi-threading**: Non-blocking UI during intensive processing operations
 
-### 🎮 User-Friendly Interface
-- **PyQt5-based GUI**: Clean, responsive desktop interface
-- **Keyboard shortcuts**: Efficient workflow with customizable hotkeys
-- **Menu system**: Organized menu structure for all functions
-- **Progress visualization**: Real-time feedback on processing status
-
 ## Installation
 
 ### Prerequisites
@@ -44,17 +38,6 @@ cd sam2-gui-annotator
 
 # Install dependencies
 pip install -r requirements.txt
-```
-
-### Method 2: Using Poetry
-```bash
-# Clone the repository
-git clone <repository-url>
-cd sam2-gui-annotator
-
-# Install with Poetry
-poetry install
-poetry shell
 ```
 
 ### Required Dependencies
@@ -126,44 +109,6 @@ python src/main.py
 | `Ctrl+P` | Process all images |
 | `Ctrl+Delete` | Clear all annotations |
 
-## Project Structure
-
-```
-sam2-gui-annotator/
-├── src/
-│   ├── main.py                 # Application entry point
-│   ├── app/
-│   │   ├── gui.py             # Main window and menu system
-│   │   ├── events.py          # Event handling
-│   │   └── widgets/
-│   │       └── annotation_canvas.py  # Main annotation interface
-│   ├── controllers/
-│   │   └── annotation_controller.py  # Core annotation logic
-│   ├── models/
-│   │   └── annotation_state.py       # State management
-│   ├── services/
-│   │   ├── image_loader.py           # Image loading utilities
-│   │   ├── sam_runner.py             # SAM2 model interface
-│   │   ├── storage.py                # Data persistence
-│   │   └── video_loader.py           # Video processing (future)
-│   └── utils/
-│       └── config.py                 # Configuration management
-├── tests/                            # Unit tests
-├── data/
-│   └── samples/                      # Sample images
-├── requirements.txt                  # Python dependencies
-├── pyproject.toml                   # Poetry configuration
-└── README.md                        # This file
-```
-
-## Architecture
-
-The application follows a Model-View-Controller (MVC) architecture:
-
-- **View Layer** (`app/`): PyQt5-based GUI components
-- **Controller Layer** (`controllers/`): Business logic and coordination
-- **Model Layer** (`models/`): Data structures and state management
-- **Service Layer** (`services/`): External integrations (SAM2, file I/O)
 
 ## Configuration
 
@@ -178,46 +123,6 @@ controller = AnnotationController(model_name="sam2.1_b.pt")
 ### UI Configuration
 The interface can be customized through the configuration files in `utils/config.py`.
 
-## Contributing
-
-### Development Setup
-1. Fork the repository
-2. Create a virtual environment
-3. Install dependencies: `pip install -r requirements.txt`
-4. Run tests: `python -m pytest tests/`
-5. Make your changes
-6. Submit a pull request
-
-### Code Style
-- Follow PEP 8 guidelines
-- Use type hints where applicable
-- Add docstrings to all public methods
-- Include unit tests for new features
-
-## Troubleshooting
-
-### Common Issues
-
-#### Model Loading Errors
-```
-Error loading SAM2 model: ...
-```
-**Solution**: Ensure you have sufficient disk space and internet connection for model download.
-
-#### PyQt5 Import Errors
-```
-ModuleNotFoundError: No module named 'PyQt5'
-```
-**Solution**: Install PyQt5: `pip install PyQt5`
-
-#### Memory Issues
-**Solution**: Use a smaller SAM2 model (`sam2.1_s.pt`) or reduce batch size.
-
-### Performance Tips
-- Use GPU acceleration if available
-- Close other applications to free up RAM
-- Use smaller images for faster processing
-- Enable batch processing for multiple images
 
 ## License
 
@@ -234,21 +139,21 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 If you use this tool in your research, please cite:
 
 ```bibtex
-@software{sam2_gui_annotator,
-  title={SAM2 GUI Annotator: Interactive Image Segmentation Tool},
-  author={Your Name},
+@INPROCEEDINGS{koh2024crcd,
+  author={Oh, Ki-Hwan and Borgioli, Leonardo and Mangano, Alberto and Valle, Valentina and Di Pangrazio, Marco and Toti, Francesco and Pozza, Gioia and Ambrosini, Luciano and Ducas, Alvaro and Žefran, Miloš and Chen, Liaohai and Giulianotti, Pier Cristoforo},
+  booktitle={2024 International Symposium on Medical Robotics (ISMR)}, 
+  title={Comprehensive Robotic Cholecystectomy Dataset (CRCD): Integrating Kinematics, Pedal Signals, and Endoscopic Videos}, 
   year={2024},
-  url={https://github.com/yourusername/sam2-gui-annotator}
+  pages={1-7},
+  keywords={Medical robotics;Automation;Robot vision systems;Liver;Kinematics;Predictive models;Cameras},
+  doi={10.1109/ISMR63436.2024.10585836}
+}
+
+@article{doi:10.1142/S2424905X25500060,
+  author = {Oh, Ki-Hwan and Borgioli, Leonardo and Mangano, Alberto and Valle, Valentina and Pangrazio, Marco Di and Toti, Francesco and Pozza, Gioia and Ambrosini, Luciano and Ducas, Alvaro and \v{Z}efran, Milo\v{s} and Chen, Liaohai and Giulianotti, Pier Cristoforo},
+  title = {Expanded Comprehensive Robotic Cholecystectomy Dataset},
+  journal = {Journal of Medical Robotics Research},
+  doi = {10.1142/S2424905X25500060},
+  URL = {https://doi.org/10.1142/S2424905X25500060}
 }
 ```
-
-## Support
-
-For questions, issues, or feature requests, please:
-1. Check the [Issues](../../issues) page
-2. Create a new issue with detailed information
-3. Include system specifications and error messages
-
----
-
-**Happy Annotating! 🎨**
