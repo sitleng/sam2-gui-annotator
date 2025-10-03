@@ -1,0 +1,10 @@
+numpy
+opencv-python-headless
+matplotlib
+tqdm
+ultralytics
+pyqt5
+Pillow
+glob2
+pathlib
+typing
