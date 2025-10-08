@@ -3,13 +3,10 @@ Enhanced annotation canvas with SAM2 integration and multi-object support
 """
 import os
 import sys
-import numpy as np
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
                            QPushButton, QFileDialog, QProgressBar, QMessageBox,
-                           QSpinBox, QGroupBox, QTextEdit, QSplitter, QApplication)
-from PyQt5.QtGui import QImage, QPixmap, QPainter, QPen, QColor
-from PyQt5.QtCore import Qt, QPoint, QThread, pyqtSignal
-import matplotlib.pyplot as plt
+                           QGroupBox, QTextEdit, QSplitter, QApplication)
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
@@ -223,26 +220,39 @@ Instructions:
     
     def load_image_folder(self):
         """Load images from a selected folder."""
-        folder = QFileDialog.getExistingDirectory(self, "Select Image Folder")
-        if folder and self.controller:
-            # Clear previous annotations and results when loading new folder
-            self.controller.clear_all_annotations()
-            self.current_results = None
-            self.log_status(f"Cleared previous annotations for new folder")
-            
-            success = self.controller.load_image_folder(folder)
-            if success:
-                info = self.controller.get_image_info()
-                self.folder_info_label.setText(
-                    f"Loaded {self.controller.get_image_count()} images\n"
-                    f"From: {info.get('folder', 'Unknown')}"
-                )
-                self.load_and_display_first_image()
-                self.update_object_info()  # Update UI to reflect cleared state
-                self.log_status(f"Loaded {self.controller.get_image_count()} images from {folder}")
-            else:
-                QMessageBox.warning(self, "Warning", "No images found in the selected folder")
-                self.log_status("Failed to load images from folder")
+        dialog = QFileDialog(self)
+        dialog.setFileMode(QFileDialog.Directory)
+        dialog.setOption(QFileDialog.ShowDirsOnly, True)
+        dialog.setOption(QFileDialog.DontUseNativeDialog, True)  # Use Qt dialog instead of native
+        dialog.setWindowTitle("Select Image Folder - Click on folder name, then click 'Open'")
+        dialog.setLabelText(QFileDialog.Accept, "Select Folder")  # Change button text
+        if dialog.exec_():
+            folder = dialog.selectedFiles()[0]
+            if folder:
+                if not os.path.isdir(folder):
+                    QMessageBox.warning(self, "Invalid Selection", "Please select a folder, not a file.")
+                    self.log_status("Invalid selection: selected a file instead of a folder")
+                    return
+                if not self.controller:
+                    return
+                # Clear previous annotations and results when loading new folder
+                self.controller.clear_all_annotations()
+                self.current_results = None
+                self.log_status(f"Cleared previous annotations for new folder")
+                
+                success = self.controller.load_image_folder(folder)
+                if success:
+                    info = self.controller.get_image_info()
+                    self.folder_info_label.setText(
+                        f"Loaded {self.controller.get_image_count()} images\n"
+                        f"From: {info.get('folder', 'Unknown')}"
+                    )
+                    self.load_and_display_first_image()
+                    self.update_object_info()  # Update UI to reflect cleared state
+                    self.log_status(f"Loaded {self.controller.get_image_count()} images from {folder}")
+                else:
+                    QMessageBox.warning(self, "Warning", "No images found in the selected folder")
+                    self.log_status("Failed to load images from folder")
     
     def load_and_display_first_image(self):
         """Load and display the first image."""

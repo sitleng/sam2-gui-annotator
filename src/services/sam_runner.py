@@ -154,7 +154,7 @@ class SAMRunner:
         loader = LoadImagesAndVideos(folder)
         loader.source_type = SourceTypes(from_img=True)
         loader.frames = loader.ni
-        loader.frame = 0
+        loader.frame = -1  # Start at -1 so first increment makes it 0
         loader.mode = "video"
         loader.fps = 10
         
@@ -174,8 +174,8 @@ class SAMRunner:
         Returns:
             Generator of results
         """
-        if not self.predictor:
-            self.create_video_predictor()
+        # IMPORTANT: Always create a new predictor to avoid state carryover between videos
+        self.create_video_predictor()
         
         loader = self.create_image_loader(folder_path)
         

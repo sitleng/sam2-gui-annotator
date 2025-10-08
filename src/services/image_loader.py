@@ -5,8 +5,7 @@ import os
 import cv2
 import numpy as np
 from glob import glob
-from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 
 class ImageLoader:
@@ -32,6 +31,10 @@ class ImageLoader:
         
         if not os.path.exists(folder_path):
             print(f"Folder does not exist: {folder_path}")
+            return False
+        
+        if not os.path.isdir(folder_path):
+            print(f"Selected path is not a directory: {folder_path}")
             return False
         
         # Build glob patterns for all extensions
