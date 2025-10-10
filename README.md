@@ -7,7 +7,7 @@ A powerful GUI application for interactive image segmentation and annotation usi
 ### 🎯 Interactive Segmentation
 - **Point-based annotation**: Click to add positive/negative points for precise segmentation control
 - **Multi-object support**: Annotate multiple objects in a single image with different labels
-- **Real-time preview**: Instant visual feedback as you add annotation points
+- **Real-time preview**: Instant visual feedback as you add annotation point
 - **Object switching**: Easy navigation between different objects using keyboard shortcuts
 
 ### 🖼️ Image Management
